@@ -51,12 +51,10 @@ serviceCtrl.create = async (req, reply) => {
 
     const messageOptions = {
       to: foundClientById.cellPhoneNum,
-      text:[`Gracias por siempre elegir nuestros servicios, ${foundClientById.name}.`,`Te notificamos que se ha creado correctamente el servicio de tu moto con la placa ${placa}`]
-    }
+      text: `Gracias por siempre elegir nuestros servicios, ${foundClientById.name}.\n\Te notificamos que se ha creado correctamente el servicio de tu moto con la placa ${placa}`,
+    };
 
-    await sendMessage(messageOptions)
-
-    cliente.initialize();
+    sendMessage(messageOptions);
 
     return response(reply, 201, true, newService, "service created");
   } catch (error) {
@@ -157,12 +155,10 @@ serviceCtrl.update = async (req, reply) => {
 
     const messageOptions = {
       to: foundClientById.cellPhoneNum,
-      text: [`¡Hola otra vez, ${foundClientById.name}!.`,`Te notificamos que el servicio de tu moto con la placa ${service.placa} ahora está ${changeState}`]
-    }
+      text: `¡Hola otra vez, ${foundClientById.name}!.\n\Te notificamos que el servicio de tu moto con la placa ${service.placa} ahora está ${changeState}`,
+    };
 
-    await sendMessage(messageOptions)
-
-    cliente.initialize()
+    sendMessage(messageOptions);
 
     await service.updateOne({
       ...req.body,

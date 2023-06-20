@@ -11,16 +11,15 @@ const clientCtrl = {};
 // Método para crear un nuevo cliente
 clientCtrl.create = async (req, reply) => {
   try {
-    const { email, docNum, cellPhoneNum,password } = req.body;
+    const { email, docNum, cellPhoneNum, password } = req.body;
 
-    const [foundEmail, foundDocNum, foundCellNum] =
-    await Promise.all([
-      clientModel.findOne({email}),
-      clientModel.findOne({docNum}),
-      clientModel.findOne({cellPhoneNum}),
+    const [foundEmail, foundDocNum, foundCellNum] = await Promise.all([
+      clientModel.findOne({ email }),
+      clientModel.findOne({ docNum }),
+      clientModel.findOne({ cellPhoneNum }),
     ]);
 
-    if(foundEmail){
+    if (foundEmail) {
       return response(
         reply,
         404,
@@ -28,7 +27,7 @@ clientCtrl.create = async (req, reply) => {
         "",
         `el email ya existe en la base de datos`
       );
-    } else if(foundDocNum){
+    } else if (foundDocNum) {
       return response(
         reply,
         404,
@@ -36,7 +35,7 @@ clientCtrl.create = async (req, reply) => {
         "",
         `el numero de documento ya existe en la base de datos`
       );
-    } else if(foundCellNum){
+    } else if (foundCellNum) {
       return response(
         reply,
         404,
@@ -46,32 +45,30 @@ clientCtrl.create = async (req, reply) => {
       );
     }
 
-    const passwordEncrypt= encryptPassword(password)
+    const passwordEncrypt = encryptPassword(password);
 
     const newClient = await clientModel.create({
       ...req.body,
-      password: passwordEncrypt
+      password: passwordEncrypt,
     });
 
-    const emailOptions={
+    const emailOptions = {
       to: newClient.email,
       vehicle: "",
       name: newClient.name,
       lastname: newClient.lastname,
       subject: `BIENVENID@ ${newClient.name}`,
-      text: "Tu cuenta se ha creado exitosamente" 
-    }
+      text: "Tu cuenta se ha creado exitosamente",
+    };
 
-    sendEmail(emailOptions)
+    sendEmail(emailOptions);
 
     const messageOptions = {
       to: newClient.cellPhoneNum,
-      text: [`¡Gracias por elegirnos ${newClient.name}!`,'Te notificamos que se ha creado exitosamente tu cuenta']
-    }
+      text: `¡Gracias por elegirnos ${newClient.name}!\n\Te notificamos que se ha creado exitosamente tu cuenta`,
+    };
 
-    await sendMessage(messageOptions)
-
-    cliente.initialize();
+    sendMessage(messageOptions);
 
     return response(
       reply,
@@ -97,9 +94,7 @@ clientCtrl.create = async (req, reply) => {
 // Método para listar todos los clientes
 clientCtrl.listAll = async (req, reply) => {
   try {
-    const clients = await clientModel
-      .find()
-      .select({ password: 0 });
+    const clients = await clientModel.find().select({ password: 0 });
 
     return response(reply, 200, true, clients, "List of registered clients. ");
   } catch (error) {
@@ -154,7 +149,7 @@ clientCtrl.update = async (req, reply) => {
 
     const client = await clientModel.findById(id);
 
-    if (!client){
+    if (!client) {
       return response(
         reply,
         404,
@@ -164,88 +159,62 @@ clientCtrl.update = async (req, reply) => {
       );
     }
 
-    const { email, docNum, cellPhoneNum, password,placa } = req.body;
+    const { email, docNum, cellPhoneNum, password, placa } = req.body;
 
     const [foundEmail, foundDocNum, foundCellNum, foundVehicle] =
-    await Promise.all([
-      clientModel.findOne({email}),
-      clientModel.findOne({docNum}),
-      clientModel.findOne({cellPhoneNum}),
-      clientModel.findOne({placa}),
-    ]);
+      await Promise.all([
+        clientModel.findOne({ email }),
+        clientModel.findOne({ docNum }),
+        clientModel.findOne({ cellPhoneNum }),
+        clientModel.findOne({ placa }),
+      ]);
 
-    if(foundEmail){
-      return response(
-        reply,
-        404,
-        false,
-        "",
-        `el email ya existe`
-      );
-    } else if(foundDocNum){
-      return response(
-        reply,
-        404,
-        false,
-        "",
-        `el docNum ya existe`
-      );
-    } else if(foundCellNum){
-      return response(
-        reply,
-        404,
-        false,
-        "",
-        `el cellPhoneNum ya existe`
-      );
-    } else if(foundVehicle){
-      return response(
-        reply,
-        404,
-        false,
-        "",
-        `el foundVehicle ya existe`
-      );
-
+    if (foundEmail) {
+      return response(reply, 404, false, "", `el email ya existe`);
+    } else if (foundDocNum) {
+      return response(reply, 404, false, "", `el docNum ya existe`);
+    } else if (foundCellNum) {
+      return response(reply, 404, false, "", `el cellPhoneNum ya existe`);
+    } else if (foundVehicle) {
+      return response(reply, 404, false, "", `el foundVehicle ya existe`);
     }
 
-    const addVehicle = client.vehicles.push({placa})
+    const addVehicle = client.vehicles.push({ placa });
 
-    if(addVehicle){
-
-      const emailOptions={
+    if (addVehicle) {
+      const emailOptions = {
         to: client.email,
         vehicle: placa,
         name: client.name,
         lastname: client.lastname,
         subject: `Moto agregada`,
-        text: `Se ha agregado correctamente tu moto con la placa ${placa}`
-      }
-  
-      return sendEmail(emailOptions)
+        text: `Se ha agregado correctamente tu moto con la placa ${placa}`,
+      };
+
+      return sendEmail(emailOptions);
     }
 
     if (password) {
       return await comparePassword(req, reply, password, client);
     }
 
-    const passwordEncrypt= encryptPassword(password)
+    const passwordEncrypt = encryptPassword(password);
 
     await client.updateOne({
       ...req.body,
-      password: passwordEncrypt
+      password: passwordEncrypt,
     });
 
-    const emailOptions={
+    const emailOptions = {
       to: client.email,
       vehicle: "",
       name: client.name,
       lastname: client.lastname,
       subject: `Actualización de datos`,
-      text: "Se han actualizado correctamente tus datos" 
-    }
+      text: "Se han actualizado correctamente tus datos",
+    };
 
-    sendEmail(emailOptions)
+    sendEmail(emailOptions);
 
     return response(
       reply,
@@ -274,9 +243,11 @@ clientCtrl.delete = async (req, reply) => {
     if (!client) {
       return response(
         reply,
-         404, 
-         false, 
-         "", "The client doesn't exist in the database");
+        404,
+        false,
+        "",
+        "The client doesn't exist in the database"
+      );
     }
 
     await client.deleteOne();
