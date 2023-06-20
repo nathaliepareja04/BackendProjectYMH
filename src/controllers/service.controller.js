@@ -52,7 +52,7 @@ serviceCtrl.create = async (req, reply) => {
     const messageOptions = {
       to: foundClientById.cellPhoneNum,
       text:[`Gracias por siempre elegir nuestros servicios, ${foundClientById.name} 🤗. \n\n`,
-      `Te notificamos que se ha creado correctamente el servicio de tu moto con la placa ${placa} 🛵`]
+      `Te notificamos que se ha creado correctamente el servicio de tu moto con la placa ${placa} 🏍️`]
     }
 
     await sendMessage(messageOptions)
@@ -159,7 +159,7 @@ serviceCtrl.update = async (req, reply) => {
     const messageOptions = {
       to: foundClientById.cellPhoneNum,
       text: [`¡Hola otra vez, ${foundClientById.name} 🤗!. \n\n`,
-      `Te notificamos que el servicio de tu moto con la placa ${service.placa} ahora está ${changeState} 🛵`]
+      `Te notificamos que el servicio de tu moto con la placa ${service.placa} ahora está ${changeState} 🏍️`]
     }
 
     await sendMessage(messageOptions)
