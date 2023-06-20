@@ -66,8 +66,7 @@ clientCtrl.create = async (req, reply) => {
 
     const messageOptions = {
       to: newClient.cellPhoneNum,
-      text: [`¡Gracias por elegirnos ${newClient.name} 🤗! \n\n`,
-      'Te notificamos que se ha creado exitosamente tu cuenta🤩']
+      text: [`¡Gracias por elegirnos ${newClient.name}!`,'Te notificamos que se ha creado exitosamente tu cuenta']
     }
 
     await sendMessage(messageOptions)
