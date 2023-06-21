@@ -51,7 +51,7 @@ serviceCtrl.create = async (req, reply) => {
 
     const messageOptions = {
       to: foundClientById.cellPhoneNum,
-      text: `Gracias por siempre elegir nuestros servicios, ${foundClientById.name}.\n\Te notificamos que se ha creado correctamente el servicio de tu moto con la placa ${placa}`,
+      text: `Gracias por siempre elegir nuestros servicios, ${foundClientById.name}😄.\n\Te notificamos que se ha creado correctamente el servicio de tu moto con la placa ${placa} 🏍️.`,
     };
 
     sendMessage(messageOptions);
@@ -119,27 +119,27 @@ serviceCtrl.update = async (req, reply) => {
     var changeState;
 
     if (state === "asignacionPendiente") {
-      changeState = "asignación pendiente";
+      changeState = "asignación pendiente 📋";
     }
 
     if (state === "autorizacionPendiente") {
-      changeState = "autorización pendiente";
+      changeState = "autorización pendiente 📋";
     }
 
     if (state === "repuestosPendientes") {
-      changeState = "pendiente de repuestos";
+      changeState = "pendiente de repuestos ⚙️";
     }
 
     if (state === "trabajoExternoPendiente") {
-      changeState = "pendiente de trabajos externos";
+      changeState = "pendiente de trabajos externos 📍";
     }
 
     if (state === "procesoReparacion") {
-      changeState = "en proceso de reparación";
+      changeState = "en proceso de reparación 🛠️";
     }
 
     if (state === "ok") {
-      changeState = "lista para entrega";
+      changeState = "lista para entrega 🤩🏍️";
     }
 
     const emailOptions = {
@@ -155,7 +155,7 @@ serviceCtrl.update = async (req, reply) => {
 
     const messageOptions = {
       to: foundClientById.cellPhoneNum,
-      text: `¡Hola otra vez, ${foundClientById.name}!.\n\Te notificamos que el servicio de tu moto con la placa ${service.placa} ahora está ${changeState}`,
+      text: `¡Hola otra vez, ${foundClientById.name}!🤗\n\Te notificamos que el servicio de tu moto con la placa ${service.placa} ahora está ${changeState}.`,
     };
 
     sendMessage(messageOptions);
