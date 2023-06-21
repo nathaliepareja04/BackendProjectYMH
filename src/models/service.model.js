@@ -25,7 +25,6 @@ const serviceSchema = new Schema(
     order: {
       type: String,
       unique:true,
-      required: [true, "The 'order' field is required"],
     },
     campus: {
       type: String,

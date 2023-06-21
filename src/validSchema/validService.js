@@ -2,7 +2,7 @@ module.exports = validService = {
   body: {
     type: "object",
     required: ["typeService", "client", "duration",
-    "campus","endTime","state","order", "placa"],
+    "campus","endTime", "placa"],
     properties: {
       typeService: {
         type: "string",
