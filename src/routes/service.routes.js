@@ -9,12 +9,10 @@ const middleware = (req, reply, done) => {
 module.exports = serviceRoutes = (fastify, opts, done) => {
   fastify.get(
     "/",
-    {preHandler:[middleware]},
     serviceCtrl.listAll
   );
   fastify.get(
     "/:id",
-    {preHandler:[middleware]},
     serviceCtrl.listOne
   );
 
@@ -31,7 +29,6 @@ module.exports = serviceRoutes = (fastify, opts, done) => {
   );
   fastify.delete(
     "/:id",
-    {preHandler:[middleware]},
     serviceCtrl.delete
   );
 

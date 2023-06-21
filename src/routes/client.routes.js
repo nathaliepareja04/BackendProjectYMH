@@ -8,11 +8,11 @@ const middleware = (req, reply, done) => {
 
 const clientRoutes = (fastify, opts, done) => {
   fastify.get(
-    "/",{preHandler:[middleware]},
+    "/",
     clientCtrl.listAll
   );
   fastify.get(
-    "/:id",{preHandler:[middleware]},
+    "/:id",
     clientCtrl.listOne
   );
   fastify.post(
@@ -24,12 +24,10 @@ const clientRoutes = (fastify, opts, done) => {
   );
   fastify.put(
     "/:id",
-    {preHandler:[middleware]},
     clientCtrl.update
   );
   fastify.delete(
     "/:id",
-    {preHandler:[middleware]},
     clientCtrl.delete
   );
 
