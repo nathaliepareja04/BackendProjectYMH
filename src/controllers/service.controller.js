@@ -51,7 +51,7 @@ serviceCtrl.create = async (req, reply) => {
 
     const messageOptions = {
       to: foundClientById.cellPhoneNum,
-      text: `Gracias por siempre elegir nuestros servicios, ${foundClientById.name}😄.\n\Te notificamos que se ha creado correctamente el servicio de tu moto con la placa ${placa} 🏍️.`,
+      text: `Gracias por siempre elegir nuestros servicios, ${foundClientById.name}😄.\n\Te notificamos que se ha creado correctamente el servicio de tu moto con la placa *${placa}*./n/Si deseas saber más información sobre tus servicios, ingresa a http://127.0.0.1:5173/status/${client}`,
     };
 
     sendMessage(messageOptions);
@@ -91,6 +91,22 @@ serviceCtrl.listOne = async (req, reply) => {
     if (!service) return response(reply, 404, false, "", "service not found");
 
     return response(reply, 200, true, service, "service found");
+  } catch (error) {
+    return response(reply, 500, false, "", error.message);
+  }
+};
+
+serviceCtrl.listServiceByClient = async (req, reply) => {
+  try {
+    const { id } = req.params;
+
+    const existClient = await clientModel.findById(id)
+
+    const services = await serviceModel.find({client: id})
+
+    if (!existClient) return response(reply, 404, false, "", `The client doesn't exist in the database`);
+
+    return response(reply, 200, true, services, "client service list.");
   } catch (error) {
     return response(reply, 500, false, "", error.message);
   }
@@ -155,7 +171,7 @@ serviceCtrl.update = async (req, reply) => {
 
     const messageOptions = {
       to: foundClientById.cellPhoneNum,
-      text: `¡Hola otra vez, ${foundClientById.name}!🤗\n\Te notificamos que el servicio de tu moto con la placa ${service.placa} ahora está ${changeState}.`,
+      text: `¡Hola otra vez, ${foundClientById.name}!🤗\n\Te notificamos que el servicio de tu moto con la placa ${service.placa} ahora está ${changeState}./n/Si deseas saber más información sobre tus servicios, ingresa a http://127.0.0.1:5173/status/${client}`,
     };
 
     sendMessage(messageOptions);

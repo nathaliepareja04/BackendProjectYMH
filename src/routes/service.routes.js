@@ -15,7 +15,10 @@ module.exports = serviceRoutes = (fastify, opts, done) => {
     "/:id",
     serviceCtrl.listOne
   );
-
+  fastify.get(
+    "/client/:id",
+    serviceCtrl.listServiceByClient
+  );
   fastify.post(
     "/",
     {
