@@ -5,6 +5,8 @@ El proyecto se basa en la necesidad que pudimos identificar entre Yamaha y sus c
 
 ![My Skills](https://skills.thijs.gg/icons?i=js,nodejs,mongodb,git,)
 
+[![My Skills](https://skills.thijs.gg/icons?i=js,html,css,wasm)](https://skills.thijs.gg)
+
 ## $\mathcal{\color{blue}{Requisitos}}$📋
 
 Para ejecutar correctamente el Backend por favor sigue las siguientes instrucciones.
