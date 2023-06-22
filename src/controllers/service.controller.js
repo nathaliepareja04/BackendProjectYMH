@@ -51,7 +51,7 @@ serviceCtrl.create = async (req, reply) => {
 
     const messageOptions = {
       to: foundClientById.cellPhoneNum,
-      text: `Gracias por siempre elegir nuestros servicios, ${foundClientById.name}😄.\n\Te notificamos que se ha creado correctamente el servicio de tu moto con la placa *${placa}*.\n\Si deseas saber más información sobre tus servicios, ingresa a http://127.0.0.1:5173/status/${client}`,
+      text: `Gracias por siempre elegir nuestros servicios, ${foundClientById.name}😄.\n\Te notificamos que se ha creado correctamente el servicio de tu moto con la placa *${placa}* 🏍️.\n\Si deseas saber más información sobre tus servicios, ingresa a http://127.0.0.1:5173/status/${client}`,
     };
 
     sendMessage(messageOptions);
