@@ -1,5 +1,4 @@
 # $\fbox{Backend Practica UPB-Yamaha}$ 🏍️
-![Alt text](https://blog.vantagecircle.com/content/images/2020/08/technology-in-the-workplace.png)
 
 El proyecto se basa en la necesidad que pudimos identificar entre Yamaha y sus clientes, en la cual consiste en la comunicación durante el proceso de mantenimiento o servicio técnico. Este proyecto fue planteado y elaborado para que sea adaptable a los sistemas ya existentes de Yamaha.
 
